@@ -24,7 +24,20 @@
       <h2 style="margin-left: 10px" class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Student</h2>
     </div>
   </div>
-
+  <nav class="navbar  navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button onclick="window.location.href='/student?action=create'" value="Add" type="button" class="btn btn-primary">Add</button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex" role="search" action="search" method="get">
+          <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
   <div class="grid grid-cols-3 gap-6">
 
     <div class="col-span-3 xl:col-span-2">

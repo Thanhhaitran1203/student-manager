@@ -16,6 +16,9 @@ public class StudentService implements IService<Student>{
     private final String SELECT_ALL_STUDENT = "select * from students";
     private final String FIND_STUDENT_BY_ID = "select * from students where id=?";
     private final String REMOVE_STUDENT_BY_ID = "delete from students where id=?;";
+    private final String FIND_BY_NAME = "select * from students s where s.name like '";
+    private String close = "';";
+
 
     @Override
     public List<Student> findAll() {
@@ -103,5 +106,26 @@ public class StudentService implements IService<Student>{
         } catch (SQLException e) {
             throw new RuntimeException (e);
         }
+    }
+    public List<Student> findByName (String findName){
+        List<Student> students = new ArrayList<> ();
+        try {
+            PreparedStatement statement = connection.prepareStatement (FIND_BY_NAME +findName+close);
+            ResultSet resultSet = statement.executeQuery ();
+            while (resultSet.next ()){
+                int id = resultSet.getInt ("id");
+                String name = resultSet.getString ("name");
+                String email = resultSet.getString ("email");
+                LocalDate dateOfBirth = LocalDate.parse (resultSet.getString ("date_of_birth"), DateTimeFormatter.ISO_DATE);
+                String address = resultSet.getString ("address");
+                int phoneNumber = resultSet.getInt ("phone_number");
+                int classId = resultSet.getInt ("class_id");
+                students.add (new Student (id,name,email,dateOfBirth,address,phoneNumber,classId));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException (e);
+        }
+        return students;
     }
 }
