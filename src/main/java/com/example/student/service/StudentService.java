@@ -110,7 +110,7 @@ public class StudentService implements IService<Student>{
     public List<Student> findByName (String findName){
         List<Student> students = new ArrayList<> ();
         try {
-            PreparedStatement statement = connection.prepareStatement (FIND_BY_NAME +findName+close);
+            PreparedStatement statement = connection.prepareStatement ("select * from students s where s.name like '%" + findName +"%';");
             ResultSet resultSet = statement.executeQuery ();
             while (resultSet.next ()){
                 int id = resultSet.getInt ("id");

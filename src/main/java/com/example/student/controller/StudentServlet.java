@@ -23,6 +23,10 @@ public class StudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter ("action");
+        String findName = req.getParameter ("search");
+        if (findName != null){
+            resultSearch (req,resp);
+        }
         if (action == null){
             action = "";
         }
@@ -41,6 +45,23 @@ public class StudentServlet extends HttpServlet {
                 break;
         }
 
+
+
+    }
+
+    private void resultSearch(HttpServletRequest req, HttpServletResponse resp) {
+        String findName = req.getParameter ("search");
+        List<Student> studentList = studentService.findByName (findName);
+        req.setAttribute ("studentList",studentList);
+        req.setAttribute ("class",classService.findAll ());
+        RequestDispatcher dispatcher = req.getRequestDispatcher ("student/resultSearch.jsp");
+        try {
+            dispatcher.forward (req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException (e);
+        } catch (IOException e) {
+            throw new RuntimeException (e);
+        }
     }
 
     private void deleteStudent(HttpServletRequest req, HttpServletResponse resp) {
@@ -118,6 +139,9 @@ public class StudentServlet extends HttpServlet {
                 updateStudent(req,resp);
                 break;
             case "delete":
+                deleteStudent(req,resp);
+                break;
+            case "search":
                 deleteStudent(req,resp);
                 break;
             default:
